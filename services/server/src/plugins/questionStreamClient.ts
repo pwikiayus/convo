@@ -4,7 +4,7 @@ import {AgentQuestions} from "shared";
 
 export default fp(async (fastify) => {
     const { REDIS_URL } = fastify.config;   // <-- from .env
-    const questionStreamClient =new RedisStreamClient<AgentQuestions>(REDIS_URL,"questionStreamClient");
+    const questionStreamClient =new RedisStreamClient<AgentQuestions>(REDIS_URL,"questions:stream");
     fastify.decorate('questionStreamClient', questionStreamClient);
     fastify.addHook('onClose', async (instance) => {
         await instance.questionStreamClient.disconnect();
